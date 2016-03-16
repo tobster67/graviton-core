@@ -29,13 +29,12 @@ class ScriptHandler extends ScriptHandlerBase
      */
     public static function generateVersionYml(CommandEvent $event)
     {
-        $baseDir = __DIR__ . '/../../../graviton-repo-local';
-        $rootDir = $baseDir.'/app';
+        $baseDir = __DIR__ . '/../';
 
         if (self::hasComposerCommandInEnvVars()) {
             $coreVersionUtils = new CoreVersionUtils(
                 self::getComposerCommand(),
-                $rootDir,
+                $baseDir,
                 new Dumper
             );
             $filesystem = new Filesystem;
