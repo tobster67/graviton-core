@@ -71,15 +71,15 @@ class GravitonDocumentBundle extends Bundle implements GravitonBundleInterface
 
         $documentMap = new DocumentMap(
             (new Finder())
-                ->in(__DIR__ . '/../../../graviton')
+                ->in(__DIR__ . '/../..')
                 ->path('Resources/config/doctrine')
                 ->name('*.mongodb.xml'),
             (new Finder())
-                ->in(__DIR__ . '/../../../graviton')
+                ->in(__DIR__ . '/../..')
                 ->path('Resources/config/serializer')
                 ->name('*.xml'),
             (new Finder())
-                ->in(__DIR__ . '/../../../graviton')
+                ->in(__DIR__ . '/../..')
                 ->path('Resources/config')
                 ->name('validation.xml')
         );

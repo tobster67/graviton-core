@@ -34,7 +34,7 @@ class SchemaModel implements ContainerAwareInterface
     {
         list(, $bundle, , $model) = explode('\\', get_called_class());
         // ToDo fix paths
-        $file = __DIR__ . '/../../../core/' . $bundle . '/Resources/config/schema/' . $model . '.json';
+        $file = __DIR__ . '/../../' . $bundle . '/Resources/config/schema/' . $model . '.json';
 
         if (!file_exists($file)) {
             // fallback try on model property (this should be available on some generated classes)
