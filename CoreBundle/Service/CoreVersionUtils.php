@@ -163,7 +163,7 @@ class CoreVersionUtils
     public function getVersionConfig()
     {
         $filePath = $this->isWrapperContext()
-            ? $this->rootDir . '/../../../../app/config/version_service.yml'
+            ? $this->rootDir . 'Resources/config/version_service.yml'
             : $this->rootDir . '/config/version_service.yml';
 
         return $this->getConfiguration($filePath);
