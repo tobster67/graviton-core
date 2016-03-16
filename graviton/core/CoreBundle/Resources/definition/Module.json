@@ -1,0 +1,192 @@
+{
+  "id": "Module",
+  "description": "A service containing modules that relate to apps",
+  "service": {
+    "readOnly": false,
+    "routerBase": "/core/module/",
+    "fixtures": [
+      {
+        "id": "tablet-realEstate",
+        "key": "realEstate",
+        "app": {
+          "$ref": "http://localhost/core/app/tablet"
+        },
+        "name": {
+          "en": "Real Estate"
+        },
+        "path": "/module/realestate",
+        "order": 1,
+        "service": [
+          {
+            "name": {
+              "en": "1st admin GUI"
+            },
+            "description" : {
+              "en": "..."
+            },
+            "service": {
+              "$ref": "/file/"
+            }
+          }
+        ]
+      },
+      {
+        "id": "tablet-investment",
+        "key": "investment",
+        "app": {
+          "$ref": "http://localhost/core/app/tablet"
+        },
+        "name": {
+          "en": "Investment"
+        },
+        "path": "/module/investment",
+        "order": 2,
+        "service": [
+          {
+            "name": {
+              "en": "1st admin GUI"
+            },
+            "description" : {
+              "en": "..."
+            },
+            "service": {
+              "$ref": "/core/product/"
+            }
+          },
+          {
+            "name": {
+              "en": "2nd admin GUI"
+            },
+            "description" : {
+              "en": "..."
+            },
+            "service": {
+              "$ref": "/core/config/"
+            }
+          }
+        ]
+      },
+      {
+        "id": "tablet-retirement",
+        "key": "retirement",
+        "app": {
+          "$ref": "http://localhost/core/app/tablet"
+        },
+        "name": {
+          "en": "Retirement"
+        },
+        "path": "/module/retirement",
+        "order": 3,
+        "service": []
+      },
+      {
+        "id": "tablet-requisition",
+        "key": "requisition",
+        "app": {
+          "$ref": "http://localhost/core/app/tablet"
+        },
+        "name": {
+          "en": "Requisition"
+        },
+        "path": "/module/requisition",
+        "order": 4,
+        "service": []
+      },
+      {
+        "id": "tablet-payAndSave",
+        "key": "payAndSave",
+        "app": {
+          "$ref": "http://localhost/core/app/tablet"
+        },
+        "name": {
+          "en": "Pay & Save"
+        },
+        "path": "/module/payandsave",
+        "order": 5,
+        "service": []
+      },
+      {
+        "id": "admin-AdminRef",
+        "key": "AdminRef",
+        "app": {
+          "$ref": "http://localhost/core/app/admin"
+        },
+        "name": {
+          "en": "Admin Ref Module"
+        }
+      }
+    ]
+  },
+  "target": {
+    "indexes": [],
+    "relations": [],
+    "fields": [
+      {
+        "name": "id",
+        "type": "varchar",
+        "title": "ID",
+        "description": "Unique identifier of a module."
+      },
+      {
+        "name": "key",
+        "type": "varchar",
+        "title": "Key",
+        "description": "A short string identifying this module.",
+        "required": true
+      },
+      {
+        "name": "app.ref",
+        "type": "extref",
+        "title": "Application",
+        "description": "Link to the application this module belongs to.",
+        "exposeAs": "$ref",
+        "required": true,
+        "collection": ["App"]
+      },
+      {
+        "name": "name",
+        "type": "varchar",
+        "title": "Name",
+        "description": "Name of this module.",
+        "required": true,
+        "translatable": true
+      },
+      {
+        "name": "path",
+        "type": "varchar",
+        "title": "Path",
+        "description": "A path this module points to."
+      },
+      {
+        "name": "order",
+        "type": "int",
+        "title": "Order",
+        "description": "Sort order that may be used by clients to define how modules are sorted."
+      },
+      {
+        "name": "service.0.name",
+        "type": "varchar",
+        "title": "Service Name",
+        "description": "Display name for backend service referenced by this module.",
+        "required": true,
+        "translatable": true
+      },
+      {
+        "name": "service.0.description",
+        "type": "varchar",
+        "title": "Service Description",
+        "description": "Description of backend service referenced by this module.",
+        "required": false,
+        "translatable": true
+      },
+      {
+        "name": "service.0.service.ref",
+        "type": "varchar",
+        "title": "Service Link",
+        "description": "Link to service referenced by this module.",
+        "exposeAs": "$ref",
+        "required": true
+      }
+    ]
+  }
+}

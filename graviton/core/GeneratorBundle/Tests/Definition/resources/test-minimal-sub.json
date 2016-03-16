@@ -1,0 +1,13 @@
+{
+  "id": "Sub",
+  "description": "Sub",
+  "isSubDocument": true,
+  "service": {
+    "routerBase": "/hans/showcase",
+    "readOnly": true
+  },
+  "target": {
+    "relations": [],
+    "fields": []
+  }
+}

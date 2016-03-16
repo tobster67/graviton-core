@@ -1,0 +1,136 @@
+# DoctrineMongoDB Configuration
+# see: http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/config.html
+doctrine_mongodb:
+    default_database: "%mongodb.default.server.db%"
+    connections:
+        default:
+            server: "%mongodb.default.server.uri%"
+            options: { connect: true }
+    document_managers:
+        default:
+            retry_connect: 3
+            retry_query: 1
+            mappings:
+                GravitonCoreBundle: ~
+                GravitonRabbitMqBundle: ~
+            filters:
+                softdeleteable:
+                    class: Gedmo\SoftDeleteable\Filter\ODM\SoftDeleteableFilter
+                    enabled: true
+
+# StofDoctrineExtensions Configuration
+# see: https://github.com/stof/StofDoctrineExtensionsBundle/blob/master/Resources/doc/index.rst
+stof_doctrine_extensions:
+    default-locale: "en_US"
+    mongodb:
+        default:
+            loggable: true
+            softdeleteable: true
+
+# JmsSerializerBundle Configuration
+# see: http://jmsyst.com/bundles/JMSSerializerBundle/master/configuration
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d\TH:i:sO"
+            default_timezone: "UTC" # defaults to whatever timezone set in php.ini or via date_default_timezone_set
+    metadata:
+        # if you don't want to use auto-detection, you can also define the
+        # namespace prefix and the corresponding directory explicitly
+        directories:
+            any-name:
+                namespace_prefix: "Graviton\\CoreBundle"
+                path: "@GravitonCoreBundle/Resources/config/serializer"
+
+        # Using auto-detection, the mapping files for each bundle will be
+        # expected in the Resources/config/serializer directory.
+        #
+        # Example:
+        # class: My\FooBundle\Entity\User
+        # expected path: @MyFooBundle/Resources/config/serializer/Entity.User.(yml|xml|php)
+        auto_detection: true
+
+# Exercise/HTMLPurifierBundle Configuration
+# see: https://github.com/Exercise/HTMLPurifierBundle
+# see: http://htmlpurifier.org/live/configdoc/plain.html
+exercise_html_purifier:
+    default:
+        Cache.SerializerPath: '%kernel.cache_dir%/htmlpurifier'
+    graviton:
+        Core.Encoding: 'UTF-8'
+
+knp_gaufrette:
+    adapters:
+        local:
+            local:
+                directory: '%kernel.root_dir%/files'
+                create: true
+        s3:
+            aws_s3:
+                service_id: 'graviton.aws_s3.client'
+                bucket_name: '%graviton.aws_s3.bucket_name%'
+                options:
+                    create: true
+    filesystems:
+        file_service:
+            adapter: %graviton.file.gaufrette.backend%
+
+eo_airbrake:
+        host: %graviton.errbit.host%
+        api_key: %graviton.errbit.api_key%
+        ignored_exceptions:
+            - 'Symfony\Component\HttpKernel\Exception\HttpException'
+            - 'Xiag\Rql\Parser\Exception\SyntaxErrorException'
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     "%rabbitmq.host%"
+            port:     "%rabbitmq.port%"
+            user:     "%rabbitmq.user%"
+            password: "%rabbitmq.password%"
+            vhost:    "%rabbitmq.vhost%"
+            lazy:     true
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+    producers:
+        document_event:
+            class: OldSound\RabbitMqBundle\RabbitMq\Producer
+            connection: default
+            exchange_options:
+                name: graviton
+                type: topic
+    consumers:
+        dump:
+            connection: default
+            exchange_options:
+                name: graviton
+                type: topic
+            queue_options:
+                routing_keys: %graviton.rabbitmq.consumer.dump.routingkeys%
+            callback: graviton.rabbitmq.consumer.dump
+
+graviton_proxy:
+    sources:
+        swagger: "%graviton.proxy.swagger.sources%"
+
+graviton_proxy:
+    sources:
+        swagger:
+            graviton:
+                prefix: graviton
+                uri:    http://localhost:8000/swagger.json
+
+graviton_core:
+      service_name:
+        - graviton.core.static.version.get
+        - graviton.security.static.whoami.get
+      uri_whitelist:
+        - /core/version
+        - /person/whoami

@@ -1,0 +1,10 @@
+{
+  "description": "NoController",
+  "service": {
+    "readOnly": true
+  },
+  "target": {
+    "relations": [],
+    "fields": []
+  }
+}

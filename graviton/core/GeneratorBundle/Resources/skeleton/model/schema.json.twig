@@ -1,0 +1,64 @@
+{
+
+{% if json is defined %}
+  "description": {{ json.getDescription()|json_encode() }},
+{% else %}
+  "description": "@todo replace me",
+{% endif %}
+
+{% if json is defined %}
+    "title": "{{ json.getTitle() }}",
+{% endif %}
+
+  "properties": {
+{% set requiredFields = [] %}
+{% for field in fields %}
+    "{{ field.fieldName }}": {
+
+{% if field.title is defined %}
+      "title": {{ field.title|json_encode() }},
+{% else %}
+      "title": {{ field.fieldName|json_encode() }},
+{% endif %}
+
+{% if field.collection is defined and field.type == 'extref' %}
+      "collection": {{ field.collection|json_encode() }},
+{% endif %}
+
+{% if field.readOnly is defined and field.readOnly == true %}
+      "readOnly": {{ field.readOnly|json_encode() }},
+{% endif %}
+
+{% if field.xDynamicKey is defined and field.xDynamicKey != null %}
+      "x-dynamic-key": {
+          "document-id": "{{ field.xDynamicKey.documentId }}",
+          "repository-method": "{{ field.xDynamicKey.repositoryMethod }}",
+          "ref-field": "{{ field.xDynamicKey.refField }}"
+      },
+{% endif %}
+
+{% if field.description is defined and field.description != '' %}
+      "description": {{ field.description|json_encode() }}
+{% else %}
+      "description": "@todo replace me"
+{% endif %}
+
+{% if field.required is defined and field.required == true %}
+    {% set requiredFields = requiredFields|merge([field.fieldName]) %}
+{% endif %}
+
+    },
+{% endfor %}
+    "id": {
+      "title": "ID",
+      "description": "Unique identifier"
+{% if isrecordOriginFlagSet %}
+    },
+    "recordOrigin": {
+      "title": "record origin",
+      "description": "A small string like 'core' to determine the record origin. Documents from some sources must not be modified. The 'core' value is defined as readonly by default."
+{% endif %}
+    }
+  },
+  "required": {{ requiredFields|json_encode() }}
+}

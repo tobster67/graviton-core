@@ -1,0 +1,12 @@
+{
+  "id": "NoController",
+  "description": "NoController",
+  "service": {
+    "readOnly": true,
+    "roles": ["GRAVITON_USER"]
+  },
+  "target": {
+    "relations": [],
+    "fields": []
+  }
+}
