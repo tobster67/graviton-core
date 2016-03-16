@@ -120,11 +120,15 @@ class Swagger
                 $thisPattern = $route->getPattern();
                 $entityName = ucfirst($document);
 
+                $propertyType = 'String';
+                if ($schema->getProperty('id')) {
+                    $propertyType = $schema->getProperty('id')->getType();
+                }
                 $thisPath = $this->getBasicPathStructure(
                     $isCollectionRequest,
                     $entityName,
                     $entityClassName,
-                    $schema->getProperty('id')->getType()
+                    $propertyType
                 );
 
                 $thisPath['tags'] = $this->getPathTags($route);
