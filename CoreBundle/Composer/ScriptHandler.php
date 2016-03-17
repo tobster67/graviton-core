@@ -30,6 +30,9 @@ class ScriptHandler extends ScriptHandlerBase
     public static function generateVersionYml(CommandEvent $event)
     {
         $baseDir = __DIR__.'/../../../..';
+        if( strstr( __DIR__,'vendor' ) ) {
+            $baseDir.= '/..';
+        }
         $rootDir = $baseDir.'/app';
 
         if (self::hasComposerCommandInEnvVars()) {
