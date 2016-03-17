@@ -79,7 +79,7 @@
                  class="%graviton_generator.definition.loader.strategy.scan.class%"
                  parent="graviton_generator.definition.loader.strategy.abstract">
             <call method="setScanDir">
-                <argument>%kernel.root_dir%/../vendor/graviton/core/</argument>
+                <argument>%kernel.root_dir%</argument>
             </call>
         </service>
 

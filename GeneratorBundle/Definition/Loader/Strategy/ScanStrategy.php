@@ -28,8 +28,9 @@ class ScanStrategy extends DirStrategy
     {
         // if we are vendorized we will search all vendor paths
         if (strpos($scanDir, 'vendor/graviton')) {
-            $scanDir .= '../../';
             $scanDir = 'vendor/';
+        } else {
+            $scanDir = './';
         }
         $this->scanDir = $scanDir;
     }
