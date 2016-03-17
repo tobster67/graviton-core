@@ -3,12 +3,12 @@
   "type" : "symfony-bundle",
   "description" : "Graviton Core bundles",
   "keywords" : ["Graviton", "Core"],
+  "license": "GPL",
   "homepage" : "https://github.com/libgraviton",
-  "license" : "MIT",
-  "authors" :
-  [
+  "authors": [
     {
-      "name" : "list of contributors"
+      "name": "List of contributors",
+      "homepage": "https://github.com/libgraviton/graviton/graphs/contributors"
     }
   ],
   "minimum-stability" : "dev",

@@ -118,9 +118,7 @@ class CoreVersionUtils
      */
     private function runComposerInContext($command)
     {
-        $path =  ($this->isWrapperContext())
-            ? $this->rootDir.'/../../../../'
-            : $this->rootDir.'/../';
+        $path = $this->rootDir.'/../';
         $contextDir = escapeshellarg($path);
         $process = new Process('cd '.$contextDir.' && '.escapeshellcmd($this->composerCmd).' '.$command);
         $process->mustRun();
@@ -162,26 +160,11 @@ class CoreVersionUtils
      */
     public function getVersionConfig()
     {
-        $filePath = $this->isWrapperContext()
-            ? $this->rootDir . 'Resources/config/version_service.yml'
-            : $this->rootDir . '/config/version_service.yml';
+        $filePath = $this->rootDir . '/config/version_service.yml';
 
         return $this->getConfiguration($filePath);
     }
 
-    /**
-     * checks if context is a wrapper or not
-     *
-     * @return boolean
-     */
-    private function isWrapperContext()
-    {
-        if (strpos($this->rootDir, 'vendor')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * reads configuration information from the given file into an array.
